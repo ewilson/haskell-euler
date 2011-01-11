@@ -1,6 +1,5 @@
 module SimpleMath  
-( fib
-, divisors  
+( divisors  
 , numDivs
 ) where 
 
