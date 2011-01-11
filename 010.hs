@@ -1,4 +1,4 @@
 import EulerMath.Primes
 
-euler10 :: Int -> Int
-euler10 = sum . primesUpTo
+euler10 :: Int -> Integer
+euler10 = sum . map toInteger . primesUpTo

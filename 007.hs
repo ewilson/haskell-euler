@@ -1,5 +1,4 @@
 import EulerMath.Primes
 
-
 euler7 :: Int -> Int
-euler7 n = last $ nPrimes n
+euler7 = last . nPrimes 
