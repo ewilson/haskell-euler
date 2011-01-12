@@ -9,14 +9,18 @@ triDivs n = if (even n)
 				then numDivs (quot n 2) * numDivs (n+1)
 				else numDivs n * numDivs (quot (n+1) 2)
 
-euler12 :: Int -> (Int, Int, Int)
-euler12 n = head $ filter (tripleAbove n) $ map triDivTriple [1..]
+numDivs :: Int -> Int
+numDivs n = product $ map (+1) $ primeFactorMultiplicity n
+
+primeFactorMultiplicity :: Int -> [Int]
+primeFactorMultiplicity = map snd . primeFactorizationFS primes1000
+		where primes1000 = primesUpTo 1000
+
+euler12 :: Int -> Int
+euler12 n = (\ (_, t, _) -> t) . head $ filter (tripleAbove n) $ map triDivTriple [1..]
 	where 
 		triDivTriple m = (m, tri m, triDivs m)
 		tripleAbove n (_, _, m) = (m > n)
 
-primeFactorsWithMult :: Int -> [Int]
-primeFactorsWithMult = map snd . primeFactorization
 
-numDivs :: Int -> Int
-numDivs n = product $ map (+1) $ primeFactorsWithMult n
+

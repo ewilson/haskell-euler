@@ -1,27 +1,19 @@
-{-- 
-	There must be a better way.  
-	Sorry this is unreadable, and resorts to using Integer.
---}
+import EulerMath.Primes
+import EulerMath.Divisors
 
-isPrime :: Integer -> Bool
-isPrime =  null . smallFactors 
+firstPrimeFactor :: Integer -> Integer
+firstPrimeFactor n = head [ d | d <- primesUpTo n, mod n d == 0]
 
-smallFactors :: Integer -> [Integer]
-smallFactors n = takeWhile (\d -> d*d <= n) $ factors n
-	where factors n = [ d | d <- [2..n-1], mod n d == 0]
-
-smallPrimeFactors :: Integer -> [Integer]
-smallPrimeFactors = filter isPrime . smallFactors
-	
-reduceByList :: Integer -> [Integer] -> Integer
-reduceByList big []         = big
-reduceByList big (div:divs) = reduceByList (reduce big div) divs
+reduceByNextPrime :: Integer -> Integer
+reduceByNextPrime n = reduce n (firstPrimeFactor n)
 	where reduce num div =
 		if mod num div /= 0
 			then num
 			else reduce (quot num div) div
-
+	
 euler3 :: Integer -> Integer
-euler3 n = if reduceByList n (smallPrimeFactors n) == 1 
-				then last (smallPrimeFactors n)
-				else reduceByList n (smallPrimeFactors n)
+euler3 n = 
+	if reduced == 1
+		then n
+		else euler3' reduced
+			where reduced = reduceByNextPrime n

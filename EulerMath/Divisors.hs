@@ -1,27 +1,23 @@
 module EulerMath.Divisors  
 ( divisors  
 , primeFactorization
+, primeFactorizationFS
+, primeFactors
 ) where 
 
 import EulerMath.Primes
 
-{-- 
-This is good for primes under 1000 currently.
-A more general primeFactorization, both fast and
-sufficient for larger numbers would be nice.
---}
-
-divisors :: Integer -> [Integer]
+divisors :: (Integral a) => a -> [a]
 divisors n = [ d | d <- [1..n], mod n d == 0 ]
 
-primes1000 :: [Int]
-primes1000 = primesUpTo 1000
+primeFactors :: (Integral a) =>  a -> [a]
+primeFactors n = [ d | d <- primesUpTo n, mod n d == 0 ]
 
--- replacing primes1000 with primesUpTo n kills performance.
-primeFactors :: Int -> [Int]
-primeFactors n = [ d | d <- primes1000, mod n d == 0 ]
+primeFactorsFS :: (Integral a) => [a] -> a -> [a]
+primeFactorsFS smallPrimes n = [ d | d <- smallPrimes, mod n d == 0 ]
 
-timesDivides :: Int -> Int -> Int
+
+timesDivides :: (Integral a) => a -> a -> a
 timesDivides d n = timesDividesIt d n 0
 	where 
 		timesDividesIt d n i = 
@@ -29,5 +25,8 @@ timesDivides d n = timesDividesIt d n 0
 				then i
 				else timesDividesIt d (quot n d) (i+1)
 
-primeFactorization :: Int -> [(Int, Int)]
+primeFactorization :: (Integral a) => a -> [(a, a)]
 primeFactorization n = map (\p -> (p, timesDivides p n)) $ primeFactors n
+
+primeFactorizationFS :: (Integral a) => [a] -> a -> [(a, a)]
+primeFactorizationFS smallPrimes n = map (\p -> (p, timesDivides p n)) $ primeFactorsFS smallPrimes n
