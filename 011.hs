@@ -6,12 +6,16 @@ stringToIntArray = stringArrayToIntArray . stringToArray
 		stringToArray = map words . lines
 		stringArrayToIntArray = map $ map read
 		
-findMax :: [Int] -> Int
-findMax = head . foldl next [0,0,0,0]
+findMaxInRow :: (Integral a) => [a] -> a
+findMaxInRow = head . foldl next [0,0,0,0]
 	where next (oldMax: old: olds) new = max oldMax (old * new * product olds) : olds ++ [new] 
 
-z = [[1,2,3],[4,5,6]]
-w = [[1,2],[3,4],[5,6]]
+findRowMaxInArray :: (Integral a) => [[a]] -> a
+findRowMaxInArray = maximum . map findMaxInRow
+
+findMax :: (Integral a) => [[a]] -> a
+findMax = maximum . map findRowMaxInArray . findArrays
+	where findArrays array = map ($ array) [id, transpose, constSumDiags, constDiffDiags]
 
 constSumDiags :: [[a]] -> [[a]]
 constSumDiags array = map (diagSum array) [0..n]
@@ -33,3 +37,6 @@ constDiffDiags array = map (diagDiff array) [m..n]
 		diagDiff [] _           = []
 		m = ((-1) * length array) + 1
 		n = (length $ head array) - 1
+		
+euler11 :: String -> Int
+euler11 = findMax . stringToIntArray
