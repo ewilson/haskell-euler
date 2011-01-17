@@ -1,4 +1,8 @@
 import Data.List
+import Data.Char
+
+toBigInt :: [Char] -> [Int]
+toBigInt = reverse . map digitToInt
 
 bigSum :: [[Int]] -> [Int]
 bigSum = carry . map sum . transpose
