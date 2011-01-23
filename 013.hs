@@ -18,6 +18,7 @@ toString = map intToDigit . reverse
 euler13 :: String -> String
 euler13 = take 10 . toString . bigSum . input
 	
-main = do
-	input <- readFile "data/13.txt"
+fileToSolution :: FilePath -> IO()
+fileToSolution fileName = do
+	input <- readFile fileName
 	putStrLn $ euler13 input
