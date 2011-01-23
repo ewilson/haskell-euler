@@ -4,9 +4,7 @@ selfCompose f n = foldl (.) id fs
 	
 nthRow :: (Integral a) => Int -> [a]
 nthRow n = selfCompose nextRow n $ [1]
-	where
-		nextRow xs = map add $ zip (0:xs) (xs ++ [0])
-		add (x, y) = x+y
+	where nextRow xs = zipWith (+) (0:xs) (xs ++ [0])
 
 euler15 :: (Integral a) => Int -> Int -> a
 euler15 rows columns = nthRow (rows + columns) !! rows
