@@ -1,4 +1,5 @@
 import Data.List
+import EulerUtil.Io
 
 stringToIntArray :: String -> [[Int]]
 stringToIntArray = stringArrayToIntArray . stringToArray 
@@ -25,7 +26,7 @@ constSumDiags array = map (diagSum array) [0..n]
 			| idx >= length row = diagSum rows (idx - 1)
 			| otherwise         = row !! idx : diagSum rows (idx - 1) 
 		diagSum [] _            = []
-		n = max (length $ head array) (length array)
+		n = (length $ head array) + (length array) - 2
 
 constDiffDiags :: [[a]] -> [[a]]
 constDiffDiags array = map (diagDiff array) [m..n]
@@ -38,5 +39,8 @@ constDiffDiags array = map (diagDiff array) [m..n]
 		m = ((-1) * length array) + 1
 		n = (length $ head array) - 1
 		
-euler11 :: String -> Int
-euler11 = findMax . stringToIntArray
+euler11 :: String -> String
+euler11 = show . findMax . stringToIntArray
+
+euler11file :: FilePath -> IO()
+euler11file fileName = applyFunctionToFile fileName euler11
