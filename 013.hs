@@ -1,5 +1,6 @@
 import Data.List
 import Data.Char
+import EulerUtil.Io
 
 bigSum :: [[Int]] -> [Int]
 bigSum = carry . map sum . transpose
@@ -17,8 +18,6 @@ toString = map intToDigit . reverse
 
 euler13 :: String -> String
 euler13 = take 10 . toString . bigSum . input
-	
-fileToSolution :: FilePath -> IO()
-fileToSolution fileName = do
-	input <- readFile fileName
-	putStrLn $ euler13 input
+
+euler13file :: FilePath -> IO()
+euler13file fileName = applyFunctionToFile fileName euler13
