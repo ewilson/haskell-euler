@@ -1,6 +1,7 @@
 module EulerMath.BigNum  
 ( BigNat
 , bigSum
+, times
 , stringToBigNat
 , bigNatToString
 ) where 
@@ -24,21 +25,11 @@ stringToBigNat = reverse . map digitToInt
 bigNatToString :: BigNat -> [Char]
 bigNatToString = map intToDigit . reverse
 
-shift :: Int -> BigNat-> BigNat
-shift n = (++) $ replicate n 0 
-
-timesDigit :: (Int, Int) -> BigNat -> BigNat
-timesDigit (value, place) = carry . shift place . map (*value)
-
-withPlace :: BigNat -> [(Int, Int)]
-withPlace big = zip big [0..]
-
-foo :: [(Int, Int)] -> BigNat ->[BigNat]
-foo (x:xs) ys = timesDigit x ys : foo xs ys
-foo [] ys     = []
-
-bar :: BigNat -> BigNat -> [BigNat]
-bar = foo . withPlace
-
 times :: BigNat -> BigNat -> BigNat
-times x y = bigSum $ (foo . withPlace) x y
+times x y = bigSum $ (timesPlaces . withPlace) x y
+	where
+		timesPlaces (x:xs) ys = timesDigit x ys : timesPlaces xs ys
+		timesPlaces [] ys     = []
+		timesDigit (value, place) = carry . shift place . map (*value)
+		shift n = (++) $ replicate n 0 
+		withPlace big = zip big [0..]
