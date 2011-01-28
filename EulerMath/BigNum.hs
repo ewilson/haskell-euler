@@ -32,3 +32,13 @@ timesDigit (value, place) = carry . shift place . map (*value)
 
 withPlace :: BigNat -> [(Int, Int)]
 withPlace big = zip big [0..]
+
+foo :: [(Int, Int)] -> BigNat ->[BigNat]
+foo (x:xs) ys = timesDigit x ys : foo xs ys
+foo [] ys     = []
+
+bar :: BigNat -> BigNat -> [BigNat]
+bar = foo . withPlace
+
+times :: BigNat -> BigNat -> BigNat
+times x y = bigSum $ (foo . withPlace) x y
