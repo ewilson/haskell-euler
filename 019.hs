@@ -28,3 +28,9 @@ daysInMonth date
 		where 
 			m = month date
 			y = year date
+			
+dayShiftFromYearChange :: Year -> Year -> Int
+dayShiftFromYearChange start end = mod7 (sum $ map daysInYear [start..end-1])
+
+mod7 :: Int -> Int
+mod7 n = mod n 7
