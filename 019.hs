@@ -31,6 +31,9 @@ daysInMonth date
 			
 epoch :: Date
 epoch = Date 1900 1 1
+
+epochDayOfWeek :: Int
+epochDayOfWeek = 1
 			
 daysInPreviousYearsSinceEpoch :: Year -> Int
 daysInPreviousYearsSinceEpoch currentYear = sum $ map daysInYear [year epoch..currentYear-1]
@@ -51,3 +54,9 @@ monthsInYears start end = [ Date y m 1 | y <- [start..end], m<-[1..12] ]
 					  
 mod7 :: Int -> Int
 mod7 n = mod n 7
+
+dayOfWeek :: Date -> Int
+dayOfWeek date = mod7 $ epochDayOfWeek + daysSinceEpoch date
+
+isSunday :: Date -> Bool
+isSunday date = dayOfWeek date == 0
