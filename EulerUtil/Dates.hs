@@ -6,7 +6,6 @@ module EulerUtil.Dates
 , year
 , month
 , day
-, isLeapYear
 , daysInYear
 , daysInMonth  
 ) where 
@@ -19,13 +18,6 @@ data Date = Date { year :: Year
                  , month :: Month  
 				 , day :: Day
 				 } deriving (Show)
-
-isLeapYear :: Year -> Bool
-isLeapYear year
-	| mod year 400 == 0 = True
-	| mod year 100 == 0 = False
-	| mod year 4 == 0   = True
-	| otherwise         = False
 
 daysInYear :: Year -> Int
 daysInYear year = 
@@ -42,3 +34,9 @@ daysInMonth date
 			m = month date
 			y = year date
 			
+isLeapYear :: Year -> Bool
+isLeapYear year
+	| mod year 400 == 0 = True
+	| mod year 100 == 0 = False
+	| mod year 4 == 0   = True
+	| otherwise         = False
