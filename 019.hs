@@ -31,3 +31,6 @@ dayOfWeek date = mod7 $ epochDayOfWeek + daysSinceEpoch date
 
 isSunday :: Date -> Bool
 isSunday date = dayOfWeek date == 0
+
+startsWithSunday :: Year -> Year -> [Date]
+startsWithSunday start end = filter isSunday $ monthsInYears start end

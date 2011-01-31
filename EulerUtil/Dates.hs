@@ -2,7 +2,10 @@ module EulerUtil.Dates
 ( Year
 , Month
 , Day
-, Date
+, Date(Date)
+, year
+, month
+, day
 , isLeapYear
 , daysInYear
 , daysInMonth  
