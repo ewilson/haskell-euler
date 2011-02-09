@@ -7,12 +7,16 @@ module EulerMath.BigNum
 , stringToBigNat
 , bigNatToString
 , intToBigNat
-) where 
+, digitSum ) where 
 
 import Data.List
 import Data.Char
 
 type BigNat = [Int]
+
+digitSum :: (Integral a) => a -> a
+digitSum 0 = 0
+digitSum n = mod n 10 + digitSum (quot n 10)
 
 bigSum :: [BigNat] -> BigNat
 bigSum = carry . map sum . transpose
