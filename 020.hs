@@ -1,4 +1,4 @@
 import EulerMath.BigNum
 
-euler20 :: Int -> Int
-euler20 = sum . bigFact
+euler20 :: (Integral a) => (a -> a)
+euler20 = digitSum . fact

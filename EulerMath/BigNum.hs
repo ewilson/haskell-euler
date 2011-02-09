@@ -3,7 +3,7 @@ module EulerMath.BigNum
 , bigSum
 , times
 , bigExp
-, bigFact
+, fact
 , stringToBigNat
 , bigNatToString
 , intToBigNat
@@ -61,6 +61,6 @@ bigExp base n =
 sqr :: BigNat -> BigNat
 sqr big = times big big
 
-bigFact :: Int -> BigNat
-bigFact 0 = [1]
-bigFact n = times (intToBigNat n) (bigFact (n-1))
+fact :: (Integral a) => a -> a
+fact 0 = 1
+fact n = n * fact (n-1)
