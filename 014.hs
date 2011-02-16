@@ -1,4 +1,5 @@
 import qualified Data.Map as Map  
+import qualified Data.Set as Set
 import Data.Maybe
 
 loop :: (Integral a) => a -> [a]
@@ -21,7 +22,15 @@ listPrevious :: (Integral a) => [a] -> [a]
 listPrevious [] = []
 listPrevious (x:xs) = allPrevious x ++ listPrevious xs
 
-		
+subtractList :: (Integral a) => Set.Set a -> [a] -> Set.Set a
+subtractList xs ys = Set.difference xs (Set.fromList ys)
+
+removePrevious :: (Integral a) => (Set.Set a, [a]) -> (Set.Set a, [a])
+removePrevious (xs, ys) = (subtractList xs prev, filter f prev) 	
+	where 
+		prev = listPrevious ys
+		f = (<= 500)
+
 next :: (Integral a) => a -> a
 next n = 
 	if mod n 2 == 0

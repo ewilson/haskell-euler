@@ -1,5 +1,6 @@
 module EulerMath.Divisors  
-( divisors  
+( d
+, divisors  
 , primeFactorization
 , primeFactorizationFS
 , primeFactors
@@ -7,6 +8,18 @@ module EulerMath.Divisors
 
 import EulerMath.Primes
 
+properDivPairs :: (Integral a) => a -> [(a,a)]	
+properDivPairs n = takeWhile (\(a, b) -> a <= b) [ (d, quot n d) | d <- [1..quot n 2], mod n d == 0 ]
+
+d :: (Integral a) => a -> a
+d n = divisorSum n - n
+	where 
+		divisorSum = sum . map plus' . properDivPairs
+		plus' (a, b) = 
+			if a < b
+				then a + b
+				else a
+				
 divisors :: (Integral a) => a -> [a]
 divisors n = [ d | d <- [1..n], mod n d == 0 ]
 
